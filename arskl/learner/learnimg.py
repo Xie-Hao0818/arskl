@@ -1,0 +1,40 @@
+import torch.nn.functional as F
+from lightning import LightningModule
+from timm.optim import create_optimizer_v2
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from torchmetrics.functional import accuracy
+
+from arskl.model.builder import build_model
+from .builder import LEARNER
+
+
+@LEARNER.register_module()
+class LearnerImg(LightningModule):
+    def __init__(self, model_cfg, optim_cfg, epoch):
+        super().__init__()
+        self.model = build_model(model_cfg)
+        self.optim = create_optimizer_v2(model_or_params=self.model, **optim_cfg)
+        self.scheduler = CosineAnnealingLR(optimizer=self.optim, T_max=epoch)
+        self.num_classes = model_cfg['num_classes']
+        self.lr = optim_cfg['lr']
+
+    def training_step(self, batch, batch_idx):
+        x, y = batch
+        y_hat = self.model(x)
+        loss = F.cross_entropy(y_hat, y)
+        acc = accuracy(y_hat, y, task='multiclass', num_classes=self.num_classes)
+        metrics = {"acc": acc, "loss": loss}
+        self.log_dict(metrics, prog_bar=True)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        x, y = batch
+        y_hat = self.model(x)
+        loss = F.cross_entropy(y_hat, y)
+        acc = accuracy(y_hat, y, task='multiclass', num_classes=self.num_classes)
+        metrics = {"vacc": acc, "vloss": loss}
+        self.log_dict(metrics, prog_bar=True)
+
+    def configure_optimizers(self):
+        optim_dict = {'optimizer': self.optim, 'lr_scheduler': self.scheduler}
+        return optim_dict

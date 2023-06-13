@@ -1,0 +1,18 @@
+from mmcv.utils import Registry, build_from_cfg
+
+TRAINER = Registry('trainer')
+
+
+def build_trainer(cfg, default_args=None):
+    """Build a trainer from config dict.
+
+    Args:
+        cfg (dict): Config dict. It should at least contain the key "type".
+        default_args (dict | None, optional): Default initialization arguments.
+            Default: None.
+
+    Returns:
+        Dataset: The constructed dataset.
+    """
+    trainer = build_from_cfg(cfg, TRAINER, default_args)
+    return trainer
