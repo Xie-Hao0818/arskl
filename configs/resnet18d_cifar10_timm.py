@@ -1,6 +1,7 @@
 var = dict(
     name='torch/cifar10',
-    root='./dataset_img',
+    root='/home/chenjunfen/workspace/XZH/arskl/dataset_img',
+    default_root_dir='/home/chenjunfen/workspace/XZH/arskl/',
     input_size=32,
     num_classes=10,
     in_chans=3,
@@ -13,8 +14,9 @@ var = dict(
     optim='lion',
     auto_augment='rand-m6-n3-mstd0.5',
     num_workers=4,
-    devices=[0],
+    devices=[0, 1],
     accumulate_grad_batches=1,
+    seed=3407,
 )
 dateset = dict(
     type='TimmDataModule',
@@ -83,4 +85,5 @@ trainer = dict(
     devices=var['devices'],
     accumulate_grad_batches=var['accumulate_grad_batches'],
     strategy='ddp_find_unused_parameters_true',
+    default_root_dir=var['default_root_dir'],
 )

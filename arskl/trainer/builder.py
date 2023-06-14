@@ -4,7 +4,7 @@ TRAINER = Registry('trainer')
 
 
 def build_trainer(cfg, default_args=None):
-    """Build a trainer from config dict.
+    """Build a trainer from configs dict.
 
     Args:
         cfg (dict): Config dict. It should at least contain the key "type".

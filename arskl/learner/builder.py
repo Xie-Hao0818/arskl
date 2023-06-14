@@ -4,7 +4,7 @@ LEARNER = Registry('learner')
 
 
 def build_learner(cfg, default_args=None):
-    """Build a learner from config dict.
+    """Build a learner from configs dict.
 
     Args:
         cfg (dict): Config dict. It should at least contain the key "type".

@@ -4,7 +4,7 @@ MODEL = Registry('model')
 
 
 def build_model(cfg, default_args=None):
-    """Build a model from config dict.
+    """Build a model from configs dict.
 
     Args:
         cfg (dict): Config dict. It should at least contain the key "type".

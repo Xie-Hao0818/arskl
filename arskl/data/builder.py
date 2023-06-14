@@ -2,7 +2,7 @@ from mmcv.utils import Registry, build_from_cfg
 DATASETS = Registry('dataset')
 
 def build_dataset(cfg, default_args=None):
-    """Build a dataset from config dict.
+    """Build a dataset from configs dict.
 
     Args:
         cfg (dict): Config dict. It should at least contain the key "type".
