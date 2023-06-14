@@ -1,14 +1,14 @@
 var = dict(
     name='torch/cifar10',
-    root='/home/chenjunfen/workspace/XZH/arskl/dataset_img',
-    default_root_dir='/home/chenjunfen/workspace/XZH/arskl/',
+    root='/home/chenjunfen/workspace/XZH/arskl/dataset_img', # 数据集绝对路径
+    default_root_dir='/home/chenjunfen/workspace/XZH/arskl', # 日志保存绝对路径
     input_size=32,
     num_classes=10,
     in_chans=3,
     mean=[0.485, 0.456, 0.406],
     std=[0.229, 0.224, 0.225],
     batch_size=128,
-    model_name='resnet18d',
+    model_name='resnet50d',
     pretrained=True,
     epoch=50,
     optim='lion',
