@@ -6,11 +6,13 @@ var = dict(
     mean=(0.1307,),
     std=(0.3081,),
     batch_size=64,
-    model_name='legacy_seresnet18.in1k',
+    model_name='resnet18d',
     pretrained=True,
-    epoch=50,
-    optim='adamw',
+    epoch=30,
+    optim='lion',
     auto_augment='rand-m5-n3-mstd0.5',
+    num_workers=4,
+    devices=[0, 1],
 )
 dateset = dict(
     type='TimmDataModule',
@@ -40,13 +42,13 @@ dateset = dict(
     ),
     traindl_cfg=dict(
         batch_size=var['batch_size'],
-        num_workers=16,
+        num_workers=var['num_workers'],
         shuffle=True,
         pin_memory=True,
     ),
     valdl_cfg=dict(
-        batch_size=256,
-        num_workers=16,
+        batch_size=var['batch_size'],
+        num_workers=var['num_workers'],
         shuffle=False,
         pin_memory=True,
     ),
@@ -73,4 +75,5 @@ trainer = dict(
     type='Trainer',
     max_epochs=var['epoch'],
     precision='16-mixed',
+    devices=var['devices'],
 )

@@ -24,7 +24,7 @@ class LearnerImg(LightningModule):
         loss = F.cross_entropy(y_hat, y)
         acc = accuracy(y_hat, y, task='multiclass', num_classes=self.num_classes)
         metrics = {"acc": acc, "loss": loss}
-        self.log_dict(metrics, prog_bar=True)
+        self.log_dict(metrics, prog_bar=True, sync_dist=True)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -33,7 +33,7 @@ class LearnerImg(LightningModule):
         loss = F.cross_entropy(y_hat, y)
         acc = accuracy(y_hat, y, task='multiclass', num_classes=self.num_classes)
         metrics = {"vacc": acc, "vloss": loss}
-        self.log_dict(metrics, prog_bar=True)
+        self.log_dict(metrics, prog_bar=True, sync_dist=True)
 
     def configure_optimizers(self):
         optim_dict = {'optimizer': self.optim, 'lr_scheduler': self.scheduler}
