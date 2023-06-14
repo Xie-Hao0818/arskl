@@ -2,17 +2,16 @@ import torch.nn.functional as F
 from lightning import LightningModule
 from timm.optim import create_optimizer_v2
 from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.optim.swa_utils import AveragedModel, update_bn
 from torchmetrics.functional import accuracy
 
 from arskl.model.builder import build_model
 from .builder import LEARNER
-from torch.optim.swa_utils import AveragedModel, update_bn
-import torch
 
 
 @LEARNER.register_module()
 class LearnerImg(LightningModule):
-    def __init__(self, model_cfg, optim_cfg, epoch):
+    def __init__(self, model_cfg, optim_cfg, hyper_cfg, epoch):
         super().__init__()
         self.model = build_model(model_cfg)
         self.swa_model = AveragedModel(self.model)
@@ -20,6 +19,7 @@ class LearnerImg(LightningModule):
         self.scheduler = CosineAnnealingLR(optimizer=self.optim, T_max=epoch)
         self.num_classes = model_cfg['num_classes']
         self.lr = optim_cfg['lr']
+        self.save_hyperparameters(hyper_cfg)
 
     def training_step(self, batch, batch_idx):
         x, y = batch

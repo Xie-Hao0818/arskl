@@ -11,14 +11,15 @@ var = dict(
     pretrained=True,
     epoch=50,
     optim='lion',
-    auto_augment='rand-m9-n2-mstd0.5',
+    auto_augment='rand-m6-n3-mstd0.5',
     num_workers=4,
-    devices=[0, 1],
+    devices=[0],
     accumulate_grad_batches=1,
 )
 dateset = dict(
     type='TimmDataModule',
     traintf_cfg=dict(
+        type='TimmTransform',
         input_size=var['input_size'],
         is_training=True,
         auto_augment=var['auto_augment'],
@@ -26,6 +27,7 @@ dateset = dict(
         std=var['std'],
     ),
     valtf_cfg=dict(
+        type='TimmTransform',
         input_size=var['input_size'],
         mean=var['mean'],
         std=var['std'],
@@ -65,12 +67,13 @@ model = dict(
 optim = dict(
     opt=var['optim'],
     lr=3e-4,
-    weight_decay=1e-3,
+    weight_decay=5e-4,
 )
 learner = dict(
     type='LearnerImg',
     model_cfg=model,
     optim_cfg=optim,
+    hyper_cfg=var,
     epoch=var['epoch']
 )
 trainer = dict(
