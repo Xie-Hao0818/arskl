@@ -6,7 +6,7 @@ from arskl.trainer.builder import build_trainer
 import torch
 
 torch.set_float32_matmul_precision('medium')
-cfg = Config.fromfile('config/resnet18d_mnist_timm.py')
+cfg = Config.fromfile('config/resnet18d_cifar10_timm.py')
 print(cfg.pretty_text)
 learner = build_learner(cfg.learner)
 data = build_dataset(cfg.dateset)

@@ -6,6 +6,8 @@ from torchmetrics.functional import accuracy
 
 from arskl.model.builder import build_model
 from .builder import LEARNER
+from torch.optim.swa_utils import AveragedModel, update_bn
+import torch
 
 
 @LEARNER.register_module()
@@ -13,6 +15,7 @@ class LearnerImg(LightningModule):
     def __init__(self, model_cfg, optim_cfg, epoch):
         super().__init__()
         self.model = build_model(model_cfg)
+        self.swa_model = AveragedModel(self.model)
         self.optim = create_optimizer_v2(model_or_params=self.model, **optim_cfg)
         self.scheduler = CosineAnnealingLR(optimizer=self.optim, T_max=epoch)
         self.num_classes = model_cfg['num_classes']
@@ -38,3 +41,9 @@ class LearnerImg(LightningModule):
     def configure_optimizers(self):
         optim_dict = {'optimizer': self.optim, 'lr_scheduler': self.scheduler}
         return optim_dict
+
+    def on_train_epoch_end(self):
+        self.swa_model.update_parameters(self.model)
+
+    def on_train_end(self):
+        update_bn(self.trainer.datamodule.train_dataloader(), self.swa_model, device=self.device)
