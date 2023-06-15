@@ -16,18 +16,21 @@ var = dict(
     accumulate_grad_batches=1,
     seed=3407,
 )
+traintf_cfg = [
+    dict(type='RandomCrop', size=32, padding=4),
+    dict(type='RandomHorizontalFlip'),
+    dict(type='ToTensor'),
+    dict(type='Normalize', mean=(0.4914, 0.4822, 0.4465), std=(0.2470, 0.2435, 0.2616)),
+    dict(type='Cutout', n_holes=1, length=16),
+]
+valtf_cfg = [
+    dict(type='ToTensor'),
+    dict(type='Normalize', mean=(0.4942, 0.4851, 0.4504), std=(0.2467, 0.2429, 0.2616)),
+]
 dateset = dict(
     type='TimmDataModule',
-    traintf_cfg=dict(
-        type='TimmTransform',
-        input_size=var['input_size'],
-        is_training=True,
-        auto_augment=var['auto_augment'],
-    ),
-    valtf_cfg=dict(
-        type='TimmTransform',
-        input_size=var['input_size'],
-    ),
+    traintf_cfg=traintf_cfg,
+    valtf_cfg=valtf_cfg,
     trainds_cfg=dict(
         name=var['name'],
         root=var['root'],
