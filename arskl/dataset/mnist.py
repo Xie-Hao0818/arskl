@@ -2,7 +2,7 @@ from lightning import LightningDataModule
 from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
 from torchvision.transforms import Compose, RandomRotation, ToTensor, Normalize, RandomCrop
-from arskl.data.builder import DATASETS
+from arskl.dataset.builder import DATASETS
 
 
 @DATASETS.register_module()

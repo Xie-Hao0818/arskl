@@ -4,7 +4,7 @@ import torch
 from lightning.pytorch import seed_everything
 from mmcv import Config
 
-from arskl.data.builder import build_dataset
+from arskl.dataset.builder import build_dataset
 from arskl.learner.builder import build_learner
 from arskl.trainer.builder import build_trainer
 

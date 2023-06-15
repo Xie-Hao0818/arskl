@@ -3,7 +3,7 @@ from pyskl.datasets.pose_dataset import PoseDataset
 from einops import rearrange, reduce
 import matplotlib.pyplot as plt
 
-ann_file = '/inspur/hdfs6/chenjunfen/xzh/data/hmdb51_hrnet.pkl'
+ann_file = '/inspur/hdfs6/chenjunfen/xzh/dataset/hmdb51_hrnet.pkl'
 left_kp = [1, 3, 5, 7, 9, 11, 13, 15]
 right_kp = [2, 4, 6, 8, 10, 12, 14, 16]
 train_pipeline = [
@@ -30,7 +30,7 @@ val_pipeline = [
     dict(type='ToTensor', keys=['imgs'])
 ]
 
-# Train data
+# Train dataset
 dataset = PoseDataset(ann_file=ann_file, pipeline=train_pipeline, split='train1')
 dataloader_setting = dict(
     videos_per_gpu=10,
@@ -38,7 +38,7 @@ dataloader_setting = dict(
     shuffle=True,
     seed=42)
 data_loader = build_dataloader(dataset, **dataloader_setting)
-# Valid data
+# Valid dataset
 val_dataset = PoseDataset(ann_file=ann_file, pipeline=val_pipeline, split='test1')
 val_dataloader_setting = dict(
     videos_per_gpu=10,

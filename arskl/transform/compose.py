@@ -7,7 +7,7 @@ from .builder import TRANSFORM
 
 @TRANSFORM.register_module()
 class Compose:
-    """Compose a data pipeline with a sequence of transforms.
+    """Compose a dataset pipeline with a sequence of transforms.
 
         Args:
             transforms (list[dict | callable]):
@@ -31,10 +31,10 @@ class Compose:
         """Call function to apply transforms sequentially.
 
         Args:
-            data (dict): A result dict contains the data to transform.
+            data (dict): A result dict contains the dataset to transform.
 
         Returns:
-            dict: Transformed data.
+            dict: Transformed dataset.
         """
 
         for t in self.transforms:

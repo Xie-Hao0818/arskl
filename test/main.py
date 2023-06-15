@@ -8,7 +8,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.optim import lr_scheduler
 
-ann_file = '/inspur/hdfs6/chenjunfen/xzh/data/hmdb51_hrnet.pkl'
+ann_file = '/inspur/hdfs6/chenjunfen/xzh/dataset/hmdb51_hrnet.pkl'
 left_kp = [1, 3, 5, 7, 9, 11, 13, 15]
 right_kp = [2, 4, 6, 8, 10, 12, 14, 16]
 train_pipeline = [
@@ -41,7 +41,7 @@ loss_fn = nn.CrossEntropyLoss()
 optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-5)
 scheduler = lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCH)
 if __name__ == '__main__':
-    # Train data
+    # Train dataset
     dataset = PoseDataset(ann_file=ann_file, pipeline=train_pipeline, split='train1')
     dataloader_setting = dict(
         videos_per_gpu=128,
@@ -49,7 +49,7 @@ if __name__ == '__main__':
         shuffle=True,
         seed=42)
     data_loader = build_dataloader(dataset, **dataloader_setting)
-    # Valid data
+    # Valid dataset
     val_dataset = PoseDataset(ann_file=ann_file, pipeline=val_pipeline, split='test1')
     val_dataloader_setting = dict(
         videos_per_gpu=128,

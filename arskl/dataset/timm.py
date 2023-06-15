@@ -2,7 +2,7 @@ from lightning import LightningDataModule
 from timm.data import create_dataset
 from torch.utils.data import DataLoader
 
-from arskl.data.builder import DATASETS
+from arskl.dataset.builder import DATASETS
 from arskl.transform.builder import build_transform
 
 
