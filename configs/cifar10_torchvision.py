@@ -5,11 +5,12 @@ var = dict(
     input_size=32,
     num_classes=10,
     in_chans=3,
-    batch_size=128,
-    model_name='resnet18d',
+    batch_size=64,
+    model_name='ecaresnet50d',
     pretrained=True,  # 关闭clash进行权重下载
-    epoch=50,
+    epoch=100,
     optim='lion',
+    lr=3e-4,
     weight_decay=5e-4,
     num_workers=4,
     devices=[0, 1],
@@ -18,18 +19,18 @@ var = dict(
     enable_checkpointing=False,
 )
 traintf_cfg = [
-    dict(type='RandomCrop', size=32, padding=4),
-    dict(type='RandomHorizontalFlip'),
-    # dict(type='RandAugment', config_str='rand-m9-mstd0.5', hparams={}),
+    # dict(type='RandomCrop', size=32, padding=4),
+    # dict(type='RandomHorizontalFlip'),
+    dict(type='RandAugment', config_str='rand-m10-n6-mstd0.5', hparams={}),
     # dict(type='AutoAugment', config_str='original-mstd0.5', hparams={}),
     # dict(type='MixAugment', config_str='augmix-m5-w4-d2', hparams={}),
     dict(type='ToTensor'),
-    dict(type='Normalize', mean=(0.4914, 0.4822, 0.4465), std=(0.2470, 0.2435, 0.2616)),
+    dict(type='Normalize', mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
     dict(type='Cutout', n_holes=1, length=16),
 ]
 valtf_cfg = [
     dict(type='ToTensor'),
-    dict(type='Normalize', mean=(0.4942, 0.4851, 0.4504), std=(0.2467, 0.2429, 0.2616)),
+    dict(type='Normalize', mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
 ]
 dateset = dict(
     type='TimmDataModule',
@@ -69,7 +70,7 @@ model = dict(
 )
 optim = dict(
     opt=var['optim'],
-    lr=3e-4,
+    lr=var['lr'],
     weight_decay=var['weight_decay'],
 )
 learner = dict(
@@ -85,7 +86,7 @@ trainer = dict(
     precision='16-mixed',
     devices=var['devices'],
     accumulate_grad_batches=var['accumulate_grad_batches'],
-    strategy='ddp_find_unused_parameters_true',
+    # strategy='ddp_find_unused_parameters_true',
     default_root_dir=var['default_root_dir'],
     enable_checkpointing=var['enable_checkpointing'],
 )
