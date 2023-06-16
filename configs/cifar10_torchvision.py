@@ -10,6 +10,7 @@ var = dict(
     pretrained=True,  # 关闭clash进行权重下载
     epoch=50,
     optim='lion',
+    weight_decay=5e-4,
     num_workers=4,
     devices=[0, 1],
     accumulate_grad_batches=1,
@@ -17,9 +18,9 @@ var = dict(
     enable_checkpointing=False,
 )
 traintf_cfg = [
-    # dict(type='RandomCrop', size=32, padding=4),
-    # dict(type='RandomHorizontalFlip'),
-    dict(type='RandAugment', config_str='rand-m9-mstd0.5', hparams={}),
+    dict(type='RandomCrop', size=32, padding=4),
+    dict(type='RandomHorizontalFlip'),
+    # dict(type='RandAugment', config_str='rand-m9-mstd0.5', hparams={}),
     # dict(type='AutoAugment', config_str='original-mstd0.5', hparams={}),
     # dict(type='MixAugment', config_str='augmix-m5-w4-d2', hparams={}),
     dict(type='ToTensor'),
@@ -69,7 +70,7 @@ model = dict(
 optim = dict(
     opt=var['optim'],
     lr=3e-4,
-    weight_decay=5e-4,
+    weight_decay=var['weight_decay'],
 )
 learner = dict(
     type='LearnerImg',
