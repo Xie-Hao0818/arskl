@@ -34,13 +34,10 @@ var = dict(
     enable_checkpointing=True,
     num_classes={{_base_.num_classes}},
 )
-# model = dict(
-#     type='DualPath4',
-#     ckpt_path=teacher_root,
-#     num_classes={{_base_.num_classes}},
-# )
 model = dict(
-    type='SparseResnet_1',
+    type='DualPath4',
+    ckpt_path=teacher_root,
+    num_classes={{_base_.num_classes}},
 )
 scheduler1 = dict(
     type='CosineAnnealingLR',

@@ -35,14 +35,10 @@ var = dict(
     enable_checkpointing=True,
     num_classes={{_base_.num_classes}},
 )
-# model = dict(
-#     type='Hmdb51_Model',
-#     ckpt_path=teacher_root,
-#     num_classes={{_base_.num_classes}},
-# )
 model = dict(
-    type='SparseResnet_1',
-    num_classes=51,
+    type='Hmdb51_Model',
+    ckpt_path=teacher_root,
+    num_classes={{_base_.num_classes}},
 )
 scheduler1 = dict(
     type='CosineAnnealingLR',
