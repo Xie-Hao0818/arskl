@@ -1,6 +1,6 @@
 # arskl
 
-基于ptyorch,lightning,timm,mmcv的计算机视觉算法模型库
+Office code for "DPConv3D: Dual Pathway Action Recognition Based on Skeleton Heatmap"
 
 ### 优点
 - 1.配置代码逻辑分离
