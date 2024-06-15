@@ -66,7 +66,7 @@ class Learner_Skl(LightningModule):
 
     def on_test_end(self):
         cm = ConfusionMatrix(actual_vector=self.y_true.cpu().numpy(), predict_vector=self.y_pred.cpu().numpy())
-        cm.save_csv(name='/root/autodl-tmp/matrix/ntu60_931')
+        cm.save_csv(name='/root/autodl-tmp/confuse/ntu60_931')
 
     def configure_optimizers(self):
         self.optim_cfg['params'] = self.parameters()
