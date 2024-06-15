@@ -1,0 +1,81 @@
+var = dict(
+    name='torch/mnist',
+    input_size=28,
+    num_classes=10,
+    in_chans=1,
+    mean=(0.1308,),
+    std=(0.3082,),
+    batch_size=256,
+    model_name='resnet18d',
+    pretrained=True,
+    epoch=30,
+    optim='lion',
+    auto_augment='rand-m5-n2-mstd0.5',
+    num_workers=4,
+    devices=[0, 1],
+    accumulate_grad_batches=5,
+)
+dateset = dict(
+    type='TimmDataModule',
+    traintf_cfg=dict(
+        input_size=var['input_size'],
+        is_training=True,
+        auto_augment=var['auto_augment'],
+        mean=var['mean'],
+        std=var['std'],
+    ),
+    valtf_cfg=dict(
+        input_size=var['input_size'],
+        mean=var['mean'],
+        std=var['std'],
+    ),
+    trainds_cfg=dict(
+        name=var['name'],
+        root='./dataset_img',
+        download=True,
+        split='train',
+    ),
+    valds_cfg=dict(
+        name=var['name'],
+        root='./dataset_img',
+        download=True,
+        split='validation',
+    ),
+    traindl_cfg=dict(
+        batch_size=var['batch_size'],
+        num_workers=var['num_workers'],
+        shuffle=True,
+        pin_memory=True,
+    ),
+    valdl_cfg=dict(
+        batch_size=var['batch_size'],
+        num_workers=var['num_workers'],
+        shuffle=False,
+        pin_memory=True,
+    ),
+)
+model = dict(
+    type='TimmModel',
+    model_name=var['model_name'],
+    pretrained=var['pretrained'],
+    num_classes=var['num_classes'],
+    in_chans=var['in_chans'],
+)
+optim = dict(
+    opt=var['optim'],
+    lr=3e-4,
+    weight_decay=1e-3,
+)
+learner = dict(
+    type='LearnerImg',
+    model_cfg=model,
+    optim_cfg=optim,
+    epoch=var['epoch']
+)
+trainer = dict(
+    type='Trainer',
+    max_epochs=var['epoch'],
+    precision='16-mixed',
+    devices=var['devices'],
+    accumulate_grad_batches=var['accumulate_grad_batches'],
+)
