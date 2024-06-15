@@ -10,7 +10,7 @@ We provide links to the pre-processed skeleton annotations, you can directly dow
 
 
 ### Training & Testing
-You can use the following command to train or test a model.
+You can use the following command to train & test a model.
 ```bash
 bash dist_run.sh ${CONFIG_FILE}
 bash tools/dist_run.sh configs/4090x2/hmdb51/joint.py
