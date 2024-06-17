@@ -1,6 +1,6 @@
 # arskl
 
-Office code for "DPConv3D: Dual Pathway Action Recognition Based on Skeleton Heatmap"
+Official code for "DPConv3D: Dual Pathway Action Recognition Based on Skeleton Heatmap"
 
 ### Download the pre-processed skeletons
 We provide links to the pre-processed skeleton annotations, you can directly download them and use them for training & testing.
