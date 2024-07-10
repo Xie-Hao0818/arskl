@@ -1,6 +1,6 @@
 # arskl
 
-Official code for "Synergistic Dual Pathway Relearning for Fine-Grained Skeleton-Based Action Recognition"
+Official code for "Enhanced Fine-Grained Relearning for Skeleton-Based Action Recognition"
 
 ### Download the pre-processed skeletons
 We provide links to the pre-processed skeleton annotations, you can directly download them and use them for training & testing.
